@@ -1,0 +1,13 @@
+repository: kho lưu trữ
+
+commit: một đơn vị làm việc
+
+branch: nhánh
+main/master: tên của repo chính
+merge/rebase: kết hợp 2 nhánh.
+git status: hiển thị trang thái kho lưu trữ
+
+git config --global.
+
+mkdir tạo thư mục mới.
+touch tạo tập tin mới.
