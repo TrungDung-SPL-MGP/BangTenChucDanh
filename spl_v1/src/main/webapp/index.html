@@ -1,0 +1,112 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #b3d9ff;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+            }
+
+            .container {
+                background-color: #fff;
+                border-radius: 5px;
+                box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+                overflow: hidden;
+                width: 800px; /* Điều chỉnh kích thước của khung tổng */
+                display: flex;
+            }
+
+            .left-panel {
+                flex: 1;
+                padding: 20px;
+                background-image: url('your-image.jpg'); /* Đường dẫn đến hình ảnh của bạn */
+                background-size: cover;
+                background-position: center;
+            }
+
+            .right-panel {
+                flex: 1;
+                padding: 20px;
+            }
+
+            .intro {
+                text-align: center;
+                margin-bottom: 30px;
+            }
+
+            .intro h1 {
+                font-size: 24px;
+                margin: 0;
+                padding: 0;
+            }
+
+            .intro p {
+                font-size: 14px;
+                margin-top: 10px;
+            }
+
+            .login-form h2 {
+                font-size: 18px;
+                margin-bottom: 20px;
+            }
+
+            .login-form input[type="text"],
+            .login-form input[type="password"] {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 10px;
+                border: 1px solid #ccc;
+                border-radius: 3px;
+                font-size: 16px;
+            }
+
+            .login-form button {
+                background-color: #007BFF;
+                color: #fff;
+                border: none;
+                border-radius: 3px;
+                padding: 10px 20px;
+                font-size: 16px;
+                cursor: pointer;
+            }
+
+            .login-form button:hover {
+                background-color: #0056b3;
+            }
+
+        </style>
+        <title>Login </title>
+    </head>
+    <body>
+        <div class="container">
+            <div class="left-panel">
+
+                <img src="img/logo/Logo-SpaceLight-2023.png" width="450" height="300" alt="logoSPL"/>
+
+            </div>
+            <div class="right-panel" style="background: linear-gradient(to right, #ffffff 0%, #ff6699 100%);">
+                <div class="intro">
+                    <h1>Chào mừng đến với ứng dụng của chúng tôi</h1>
+                    <p>Vui lòng chuyển đến trang đăng nhập để tiếp tục</p>
+                </div>
+                <div class="login-form">
+
+                    <p><a href="login.jsp">Đăng nhập tại đây!</a></p>
+                </div>
+
+            </div>
+        </div>
+    </body>
+</html>
+
+
