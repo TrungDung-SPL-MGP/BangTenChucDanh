@@ -1,4 +1,3 @@
-
 package com.spl.bt.dto;
 
 import java.io.Serializable;
@@ -14,17 +13,14 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Room implements Serializable{
-    String id;
-    String nameroom;
-    String idtemplate;
-    String idsize;
-    String datestart;
-    int width;
-    int height;
-    String room;
-    int qty;
+public class Room implements Serializable {
 
-  
-            
+    private String id;
+    private String nameroom;
+    private String idtemplate;
+    private String idsize;
+    private String datestart;
+    private int width;
+    private int height;
+    private String room;
 }

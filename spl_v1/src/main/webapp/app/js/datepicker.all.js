@@ -2766,7 +2766,7 @@
         this.$target = ele;
         this.config = $.extend({}, defaultOptions, options);
         this.params = {};
-        // 只有时分秒，没有日期
+        //Chỉ có giờ, phút và giây, không có ngày
         this.onlyTime = API.onlytimeReg(this.config.format);
         this.init();
     }

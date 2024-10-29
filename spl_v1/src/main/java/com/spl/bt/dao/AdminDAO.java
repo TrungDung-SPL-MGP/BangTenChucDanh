@@ -61,24 +61,7 @@ public class AdminDAO implements Serializable {
     }
   public static void main(String[] args) {
 
-        // 1. Test select *
-        //System.out.println("All of devices: \n" + getInstance().getAll()); //gọi thầm tên em
-        // 2. Test select where isbn = ?
-        //System.out.println("A device by id: " + getInstance().getOne("2518407786529"));
-        // 3. Test select where author = ?
-        //System.out.println("Devices by author: " + getInstance().getAllByAuthor("Paulo Coelho"));
-        // 4. Test update a device
-        //getInstance().updateOne(new Device("2518407786529", "Nhà giả kim kim", "Paulo Coelho", 2, 2021));
-        // 3. Test select where author = ? again
-        //System.out.println(getInstance().getAllByAuthor("Paulo Coelho"));
-        // 5. Test delete a device
-        //getInstance().deleteOne("thietbibangten003");
-
-        // 1. Test select * again
-        //System.out.println("All of devices: \n" + getInstance().getAll()); //gọi thầm tên em
-        // 6. Test add a new device
-        //getInstance().addOne(new Device("BT2", "7.5inch7color","bt1",1,"100%"));
-        // 1. Test select * again
+      
         System.out.println("All of devices: \n" + getInstance().getAll()); //gọi thầm tên em
 
     }

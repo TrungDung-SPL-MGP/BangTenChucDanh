@@ -1,11 +1,11 @@
 $(document).ready(function () {
     loadSelectContent();
 
-    // 加载字段数据
+    // Loading field data
 
     loadColumnAndGoodData(1);
 
-    // 按回车键查询
+    // Press Enter to query
     $("#search_name,#search_type").bind('keypress', function (event) {
         if (event.keyCode == 13) {
             loadColumnAndGoodData(1);
@@ -13,7 +13,7 @@ $(document).ready(function () {
     });
 });
 
-// 刷新
+// refresh
 function refresh() {
     var queryData = $("#gridImport_body");
     queryData.html("");
@@ -22,7 +22,7 @@ function refresh() {
     loadColumnAndGoodData(1);
 }
 
-// 加载下拉框
+// Load drop-down box
 function loadSelectContent() {
     $.ajax({
         url: "style/queryMappingType",
@@ -45,7 +45,7 @@ function loadSelectContent() {
     })
 }
 
-// 获取模板类型
+// Get the template type
 function loadTemplateContent() {
     $.ajax({
         url: "style/queryStyleAlign",
@@ -59,7 +59,7 @@ function loadTemplateContent() {
     })
 }
 
-// 加载字段数据信息
+// Loading field data information-Tai thong tin du lieu truong
 function loadColumnAndGoodData(current) {
     var mptype = mappingtype.value;
     if (!mptype) {

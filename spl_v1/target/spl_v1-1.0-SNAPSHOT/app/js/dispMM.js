@@ -1,13 +1,14 @@
 $(document).ready(function () {
-    //加载字段数据
+    //Tải dữ liệu trường
     loadDispMMData(1);
 
-    //按回车键查询
-    $("#search_name,#search_type").bind('keypress', function (event) {
-        if (event.keyCode == 13) {
-            loadDispMMData(1);
-        }
-    });
+    //Nhấn phím Enter để truy vấn
+    $("#search_name, #search_type").on('keypress', function (event) {
+    if (event.key === 'Enter') {
+        loadDispMMData(1);
+    }
+});
+
 });
 
 //预览
@@ -28,63 +29,61 @@ function refresh() {
 
 //加载字段数据信息
 function loadDispMMData(current) {
-    $("#query_dispMMs").ajaxSubmit({
+    $.ajax({
         url: "dispMM/querydispMMs?currentPage=" + current,
+        type: 'POST',  // Thêm method POST
         dataType: "text",
         success: function (data) {
             var queryData = $("#gridImport_body");
-            queryData.html("");
             queryData.html(data);
             queryPage();
+        },
+        error: function () {
+            console.error("Failed to load data");
         }
     });
 }
 
+
 //分页效果
 function queryPage() {
-    var current = Number($("#page_currentPage").val());
-    var pages = Number($("#pages").val());
+    var current = Number($("#page_currentPage").val()) || 1;
+    var pages = Number($("#pages").val()) || 1;
     var showPage = "";
+
+    // Logic đơn giản hóa
     if (pages <= 7) {
         for (var i = 1; i <= pages; i++) {
-            showPage += "<span class = 'current_" + i + "'><a href = 'javascript:loadDispMMData("
-                    + i + ");' >" + i + "</a></span>";
+            showPage += `<span class="current_${i}"><a href="javascript:loadDispMMData(${i});">${i}</a></span>`;
         }
     } else {
+        // Hiển thị dấu "..." khi có quá nhiều trang
         if (current <= 4) {
-            for (var j = 0; j < 7; j++) {
-                showPage += "<span class = 'current_" + Number(j + 1) + "'><a href = 'javascript:loadDispMMData("
-                        + Number(j + 1) + ");' >" + Number(j + 1) + "</a></span>";
+            for (var j = 1; j <= 7; j++) {
+                showPage += `<span class="current_${j}"><a href="javascript:loadDispMMData(${j});">${j}</a></span>`;
             }
-            showPage += "</span><a href = 'javascript:loadDispMMData(" + Number(current + 4) + ");' >...</a></span>";
+            showPage += '<a href="javascript:loadDispMMData(' + (current + 4) + ');">...</a>';
         } else {
-            showPage += "</span><a href = 'javascript:loadDispMMData(" + Number(current - 4) + ");' >...</a></span>";
-            if (pages - current > 3) {
-                for (var k = 0; k < 7; k++) {
-                    showPage += "<span class = 'current_" + Number(current - 3 + k)
-                            + "'><a href = 'javascript:loadDispMMData(" + Number(current - 3 + k)
-                            + ");' >" + Number(current - 3 + k) + "</a></span>";
-                }
-                showPage += "</span><a href = 'javascript:loadDispMMData(" + Number(current + 4) + ");' >...</a></span>";
-            } else {
-                for (var k = 0; k < 7; k++) {
-                    showPage += "<span class = 'current_" + Number(pages - 6 + k)
-                            + "'><a href = 'javascript:loadDispMMData(" + Number(pages - 6 + k)
-                            + ");' >" + Number(pages - 6 + k) + "</a></span>";
-                }
+            showPage += '<a href="javascript:loadDispMMData(' + (current - 4) + ');">...</a>';
+            for (var k = Math.max(current - 3, 1); k <= Math.min(current + 3, pages); k++) {
+                showPage += `<span class="current_${k}"><a href="javascript:loadDispMMData(${k});">${k}</a></span>`;
+            }
+            if (current + 3 < pages) {
+                showPage += '<a href="javascript:loadDispMMData(' + (current + 4) + ');">...</a>';
             }
         }
     }
-    var next = Number(current + 1);
-    var prev = Number(current - 1);
+
+    // Cập nhật giao diện trang
     $(".showPage").html(showPage);
-    $(".current_" + current).css("background", "#dbffd6");
+    $(`.current_${current}`).css("background", "#dbffd6");
     $(".last_page").val(pages);
-    $(".next").val(next);
-    $(".prev").val(prev);
+    $(".next").val(current + 1);
+    $(".prev").val(current - 1);
     $(".total_p").val(pages);
     $(".skip_to").val(current);
 }
+
 
 //添加字段层
 function toAdd() {

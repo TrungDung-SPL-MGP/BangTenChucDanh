@@ -143,10 +143,7 @@
                         <td><input type="text" name="room" value="" /></td>
                     </tr>
 
-                    <tr>
-                        <td>Qty</td>
-                        <td><input type="text" name="qty" value="" /></td>
-                    </tr>
+                    
                     <tr>
                         <td>
                             <a href="room" style=" color: #333">Back</a>

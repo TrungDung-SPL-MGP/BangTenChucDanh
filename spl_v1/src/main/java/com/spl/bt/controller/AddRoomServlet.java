@@ -31,10 +31,10 @@ public class AddRoomServlet extends HttpServlet {
             int width = Integer.parseInt(request.getParameter("width"));
             int height = Integer.parseInt(request.getParameter("height"));
             String room = request.getParameter("room");
-            int quantity = Integer.parseInt(request.getParameter("qty"));
+            
 
             // Tạo một đối tượng Room mới với dữ liệu
-            Room newRoom = new Room(id, name, idTemplate, idSize, dateStart, width, height, room, quantity);
+            Room newRoom = new Room(id, name, idTemplate, idSize, dateStart, width, height, room);
 
             // Thêm phòng mới
             String result = RoomDAO.getInstance().addOne(newRoom);

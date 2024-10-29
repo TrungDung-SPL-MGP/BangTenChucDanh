@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.spl.bt.dao;
 
 import com.spl.bt.dto.Tablecard;
@@ -15,195 +11,200 @@ import java.util.logging.Logger;
 public class TablecardDAO implements Serializable {
 
     private static TablecardDAO instance;
-    private final Connection conn = DBUtil.makeConnection();
+    private final Connection conn;
 
-    // Cấm new trực tiếp TablecardDAO, chỉ đi qua con đường lấy trực tiếp TablecardDAO từ hàm static
+    // Constructor private để cấm new trực tiếp
     private TablecardDAO() {
+        conn = DBUtil.makeConnection();
     }
 
-    public static TablecardDAO getInstance() {
-
+    // Singleton instance
+    public static synchronized TablecardDAO getInstance() {
         if (instance == null) {
             instance = new TablecardDAO();
         }
         return instance;
     }
 
-    // Lấy ra tất cả tablecard trong kho
+    // Lấy ra tất cả tablecards trong DB
     public List<Tablecard> getAll() {
+        String sql = "SELECT * FROM tablecard";
+        List<Tablecard> tablecardList = new ArrayList<>();
+        try ( PreparedStatement stm = conn.prepareStatement(sql);  ResultSet rs = stm.executeQuery()) {
 
-        PreparedStatement stm;
-        ResultSet rs;
-
-        List<Tablecard> tablecardList = new ArrayList();
-        try {
-
-            String sql = "SELECT * FROM tablecard";
-            stm = conn.prepareStatement(sql);
-
-            rs = stm.executeQuery();
             while (rs.next()) {
-                tablecardList.add(new Tablecard(rs.getString("id"),
+                Tablecard tablecard = new Tablecard(rs.getString("id"),
                         rs.getString("namecard"),
                         rs.getString("idtemplate"),
                         rs.getInt("active"),
-                        rs.getString("battery")));
+                        rs.getString("battery"),
+                        rs.getString("idroom"));
+                tablecardList.add(tablecard);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(TablecardDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TablecardDAO.class.getName()).log(Level.SEVERE, "Error getting all tablecards", ex);
         }
         return tablecardList;
     }
 
-    // Lấy ra một cuốn sách dựa trên mã sách
+    // Lấy thông tin 1 tablecard theo ID
     public Tablecard getOne(String id) {
-
-        PreparedStatement stm;
-        ResultSet rs;
-
-        try {
-
-            String sql = "SELECT * FROM tablecard WHERE id = ?";
-            stm = conn.prepareStatement(sql);
+        String sql = "SELECT * FROM tablecard WHERE id = ?";
+        try ( PreparedStatement stm = conn.prepareStatement(sql)) {
             stm.setString(1, id);
-
-            rs = stm.executeQuery();
-            if (rs.next()) {
-                return new Tablecard(rs.getString("id"),
-                        rs.getString("namecard"),
-                        rs.getString("idtemplate"),
-                        rs.getInt("active"), rs.getString("battery"));
+            try ( ResultSet rs = stm.executeQuery()) {
+                if (rs.next()) {
+                    return new Tablecard(rs.getString("id"),
+                            rs.getString("namecard"),
+                            rs.getString("idtemplate"),
+                            rs.getInt("active"),
+                            rs.getString("battery"),
+                            rs.getString("idroom"));
+                }
             }
-
-        } catch (Exception ex) {
-            Logger.getLogger(TablecardDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(TablecardDAO.class.getName()).log(Level.SEVERE, "Error getting tablecard by id", ex);
         }
         return null;
     }
 
-    // Lấy ra các cuốn sách của tác giả nào đó
-    public List<Tablecard> getAllByTablecards(String id) {
-
-        PreparedStatement stm;
-        ResultSet rs;
-
-        List<Tablecard> tablecardList = new ArrayList();
-
-        try {
-
-            String sql = "SELECT * FROM tablecard WHERE namecard = ?";
-            stm = conn.prepareStatement(sql);
-            stm.setString(1, id);
-
-            rs = stm.executeQuery();
-            while (rs.next()) {
-                tablecardList.add(new Tablecard(rs.getString("id"),
-                        rs.getString("namecard"),
-                        rs.getString("idtemplate"),
-                        rs.getInt("acrive"), rs.getString("battery")));
+    // Lấy ra danh sách Tablecard theo Namecard
+    public List<Tablecard> getAllByNameCard(String namecard) {
+        String sql = "SELECT * FROM tablecard WHERE namecard = ?";
+        List<Tablecard> tablecardList = new ArrayList<>();
+        try ( PreparedStatement stm = conn.prepareStatement(sql)) {
+            stm.setString(1, namecard);
+            try ( ResultSet rs = stm.executeQuery()) {
+                while (rs.next()) {
+                    Tablecard tablecard = new Tablecard(rs.getString("id"),
+                            rs.getString("namecard"),
+                            rs.getString("idtemplate"),
+                            rs.getInt("active"),
+                            rs.getString("battery"),
+                            rs.getString("idroom"));
+                    tablecardList.add(tablecard);
+                }
             }
-            return tablecardList;
-
-        } catch (Exception ex) {
-            Logger.getLogger(TablecardDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(TablecardDAO.class.getName()).log(Level.SEVERE, "Error getting tablecards by namecard", ex);
         }
-        return null;
+        return tablecardList;
     }
 
-    // Thêm mới 1 cuốn sách vào kho
-    public String addOne(Tablecard tablecard) {
-
-        PreparedStatement stm;
-
-        try {
-
-            String sql = "INSERT INTO tablecard (id, namecard, idtemplate, active,battety) VALUES ( ?, ?, ?,?, ?)";
-            stm = conn.prepareStatement(sql);
-
+    // Thêm mới một tablecard
+    public boolean addOne(Tablecard tablecard) {
+        String sql = "INSERT INTO tablecard (id, namecard, idtemplate, active, battery, idroom) VALUES (?, ?, ?, ?, ?, ?)";
+        try ( PreparedStatement stm = conn.prepareStatement(sql)) {
             stm.setString(1, tablecard.getId());
             stm.setString(2, tablecard.getNamecard());
-
             stm.setString(3, tablecard.getIdtemplate());
             stm.setInt(4, tablecard.getActive());
             stm.setString(5, tablecard.getBattery());
-            if (stm.executeUpdate() > 0) {
-                return tablecard.getId();
-            }   // Trả về mã sách vừa thêm thành công vào kho
-        } catch (Exception ex) {
-            Logger.getLogger(TablecardDAO.class.getName()).log(Level.SEVERE, null, ex);
+            stm.setString(6, tablecard.getIdroom());
+
+            int rowsAffected = stm.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException ex) {
+            Logger.getLogger(TablecardDAO.class.getName()).log(Level.SEVERE, "Error adding tablecard", ex);
         }
-        return null;
+        return false;
     }
 
-    // Cập nhật thông tin một cuốn sách - không cập nhật mã sách
+    // Cập nhật một tablecard
     public boolean updateOne(Tablecard tablecard) {
+        String sql = "UPDATE tablecard SET namecard = ?, idtemplate = ?, active = ?, battery = ?, idroom = ? WHERE id = ?";
+        try ( PreparedStatement stm = conn.prepareStatement(sql)) {
+            stm.setString(1, tablecard.getNamecard());
+            stm.setString(2, tablecard.getIdtemplate());
+            stm.setInt(3, tablecard.getActive());
+            stm.setString(4, tablecard.getBattery());
+            stm.setString(5, tablecard.getIdroom());
+            stm.setString(6, tablecard.getId());
 
-        PreparedStatement stm;
-
-        try {
-            String sql = ""
-                    + "UPDATE tablecard "
-                    + "SET namecard = ?, idtemplate = ?, active = ?, battery = ?  "
-                    + "WHERE id = ?";
-            stm = conn.prepareStatement(sql);
-
-            stm.setString(1, tablecard.getId());
-            stm.setString(2, tablecard.getNamecard());
-
-            stm.setString(3, tablecard.getIdtemplate());
-            stm.setInt(4, tablecard.getActive());
-            stm.setString(5, tablecard.getBattery());
-            if (stm.executeUpdate() > 0) {
-                return true;
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(TablecardDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return stm.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            Logger.getLogger(TablecardDAO.class.getName()).log(Level.SEVERE, "Error updating tablecard", ex);
         }
         return false;
     }
 
-    // Xóa một cuốn sách dựa trên mã sách
+    // Xóa một tablecard theo ID
     public boolean deleteOne(String id) {
-
-        PreparedStatement stm;
-
-        try {
-
-            String sql = "DELETE FROM tablecard WHERE id = ?";
-            stm = conn.prepareStatement(sql);
-
+        String sql = "DELETE FROM tablecard WHERE id = ?";
+        try ( PreparedStatement stm = conn.prepareStatement(sql)) {
             stm.setString(1, id);
-            if (stm.executeUpdate() > 0) {
-                return true;
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(TablecardDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return stm.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            Logger.getLogger(TablecardDAO.class.getName()).log(Level.SEVERE, "Error deleting tablecard", ex);
         }
         return false;
     }
 
-    ////////////////////////////////////////////////////////////////////////////
-    public static void main(String[] args) {
-
-        // 1. Test select *
-        //System.out.println("All of tablecards: \n" + getInstance().getAll()); //gọi thầm tên em
-        // 2. Test select where isbn = ?
-        //System.out.println("A tablecard by id: " + getInstance().getOne("2518407786529"));
-        // 3. Test select where author = ?
-        //System.out.println("Tablecards by author: " + getInstance().getAllByAuthor("Paulo Coelho"));
-        // 4. Test update a tablecard
-        //getInstance().updateOne(new Tablecard("2518407786529", "Nhà giả kim kim", "Paulo Coelho", 2, 2021));
-        // 3. Test select where author = ? again
-        //System.out.println(getInstance().getAllByAuthor("Paulo Coelho"));
-        // 5. Test delete a tablecard
-        //getInstance().deleteOne("2518407786529");
-        // 1. Test select * again
-        //System.out.println("All of tablecards: \n" + getInstance().getAll()); //gọi thầm tên em
-        // 6. Test add a new tablecard
-        getInstance().addOne(new Tablecard("BT0", "7.5inch7color", "bt1", 1, "100%"));
-
-        // 1. Test select * again
-        System.out.println("All of tablecards: \n" + getInstance().getAll()); //gọi thầm tên em
-
+    // Lấy thông tin một tablecard theo ID
+    public Tablecard getCardById(String id) throws SQLException {
+        String sql = "SELECT * FROM tablecard WHERE id = ?";
+        Tablecard card = null;
+        try ( PreparedStatement stm = conn.prepareStatement(sql)) {
+            stm.setString(1, id);
+            try ( ResultSet rs = stm.executeQuery()) {
+                if (rs.next()) {
+                    card = new Tablecard();
+                    card.setId(rs.getString("id"));
+                    card.setNamecard(rs.getString("namecard"));
+                    card.setIdtemplate(rs.getString("idtemplate"));
+                    card.setActive(rs.getInt("active"));
+                    card.setBattery(rs.getString("battery"));
+                    card.setIdroom(rs.getString("idroom"));
+                } else {
+                    Logger.getLogger(TablecardDAO.class.getName()).log(Level.INFO, "Không tìm thấy tablecard với ID: " + id);
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(TablecardDAO.class.getName()).log(Level.SEVERE, "Error getting card by id", ex);
+            throw ex;
+        }
+        return card;
     }
+
+    public int countIdroom(String idroom) {
+        int qty = 0;
+        String sql = "SELECT tablecard.idroom, COUNT(idroom) AS qty FROM tablecard join room on tablecard.idroom=room.id group by idroom ;";
+        Tablecard cardcount = null;
+        try ( PreparedStatement statement = conn.prepareStatement(sql)) {
+            statement.setString(1, idroom);
+
+            try ( ResultSet rs = statement.executeQuery()) {
+                if (rs.next()) {
+                    cardcount = new Tablecard();
+                    cardcount.setIdroom(rs.getString("idroom"));
+                    qty = rs.getInt("qty");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return qty;
+        
+    }
+
+    public static void main(String[] args) {
+        TablecardDAO dao = TablecardDAO.getInstance();
+
+        // Kiểm tra kết nối trước
+        System.out.println("Testing database connection...");
+        if (dao.conn != null) {
+            System.out.println("Connection successful!");
+        } else {
+            System.out.println("Connection failed!");
+        }
+
+        // Kiểm tra lấy danh sách tablecards
+        List<Tablecard> tablecards = dao.getAll();
+        if (tablecards.isEmpty()) {
+            System.out.println("No tablecards found.");
+        } else {
+            System.out.println("Tablecards found: " + tablecards);
+        }
+    }
+
 }

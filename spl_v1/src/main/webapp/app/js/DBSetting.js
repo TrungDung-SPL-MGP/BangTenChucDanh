@@ -1,6 +1,6 @@
 function updDBConfig() {
     if ($("#db_pwd").val() != $("#db_repwd").val()) {
-        alert("两次输入的密码不一致");
+        alert("The passwords you entered twice do not match");
         return;
     }
     $.ajax({
@@ -13,11 +13,11 @@ function updDBConfig() {
         success: function (res) {
             var data = JSON.parse(res);
             if (data.resultCode == 10) {
-                alert("保存并修改成功");
+                alert("Save and modify successfully");
                 $("#db_pwd").val(data);
                 $("#db_repwd").val(data);
             } else {
-                alert("加密解析出错");
+                alert("Encryption parsing error");
             }
         },
         error: function (err) {

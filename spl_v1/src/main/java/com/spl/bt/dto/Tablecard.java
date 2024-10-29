@@ -18,11 +18,14 @@ import lombok.ToString;
 @Setter
 @ToString
 
-public class Tablecard implements Serializable {
+    public class Tablecard implements Serializable {
 
-    private String id;
-    private String namecard;
-    private String idtemplate;
-    private int active;
-    private String battery;
+        private String id;
+        private String namecard;
+        private String idtemplate;
+        private int active;
+        private String battery;
+        private String idroom;
+    
+   
 }

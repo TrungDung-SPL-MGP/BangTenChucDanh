@@ -1,63 +1,61 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package com.spl.bt.controller;
 
 import com.spl.bt.dao.TablecardDAO;
+import com.spl.bt.dao.RoomDAO;
+import com.spl.bt.dto.Room;
 import com.spl.bt.dto.Tablecard;
-import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import java.io.IOException;
+import java.util.List;
 
-@WebServlet("/AddTableCardServlet")
+@WebServlet(name = "AddTableCardServlet", urlPatterns = {"/AddTableCardServlet"})
 public class AddTableCardServlet extends HttpServlet {
 
-    
- @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    @Override
+        protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+            // Lấy danh sách các phòng từ RoomDAO
+            List<Room> roomList = RoomDAO.getInstance().getAllRooms();
 
-        String id = request.getParameter("id");
-        String namecard = request.getParameter("namecard");
-        String idtemplate=request.getParameter("idtemplate");
-        int active = Integer.parseInt(request.getParameter("active"));
-        String battery = request.getParameter("battery");
+            // Đưa danh sách phòng vào request
+            request.setAttribute("roomList", roomList);
 
-        // Kiểm tra xem ID đã tồn tại chưa
-        if (isIdExists(id)) {
-            // Nếu ID đã tồn tại, gửi thông báo lỗi
-            request.setAttribute("error", "Mã đã tồn tại. Vui lòng chọn một mã khác.");
-            request.getRequestDispatcher("/addsize.jsp").forward(request, response);
-            return;
+            // Chuyển hướng tới trang thêm tablecard (addtablecard.jsp)
+            request.getRequestDispatcher("addtablecard.jsp").forward(request, response);
         }
 
-        // Tạo một đối tượng Size mới với dữ liệu
-        Tablecard newCard = new Tablecard(id, namecard, idtemplate, active,battery);
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            // Lấy dữ liệu từ form
+            String id = request.getParameter("id");
+            String namecard = request.getParameter("namecard");
+            String idtemplate = request.getParameter("idtemplate");
+            int active = Integer.parseInt(request.getParameter("active"));
+            String battery = request.getParameter("battery");
+            String idroom = request.getParameter("idroom");
 
-        // Thêm kích thước mới
-        String result = TablecardDAO.getInstance().addOne(newCard);
+            // Tạo đối tượng Tablecard
+            Tablecard tablecard = new Tablecard(id, namecard, idtemplate, active, battery, idroom);
 
-        if (result != null) {
-            // Gửi thông báo thành công
-            request.setAttribute("success", "Kích thước đã được thêm thành công.");
+            // Lưu vào cơ sở dữ liệu thông qua TablecardDAO
+            boolean success = TablecardDAO.getInstance().addOne(tablecard);
 
-            // Chuyển hướng đến trang thành công hoặc danh sách các kích thước
-            response.sendRedirect("table");
-        } else {
-            // Xử lý trường hợp thêm kích thước không thành công
-            request.setAttribute("error", "Không thể thêm kích thước.");
-            request.getRequestDispatcher("/addtablecard.jsp").forward(request, response);
+            if (success) {
+                // Nếu thêm thành công, chuyển hướng về trang danh sách tablecard
+                response.sendRedirect("table");
+            } else {
+                // Nếu có lỗi trong quá trình thêm, chuyển hướng đến trang lỗi
+                response.sendRedirect("error.jsp");
+            }
+        } catch (Exception e) {
+            // Xử lý ngoại lệ
+            e.printStackTrace();
+            response.sendRedirect("error.jsp");
         }
-    }
-
-    // Hàm kiểm tra xem ID đã tồn tại chưa
-    private boolean isIdExists(String id) {
-       
-        return TablecardDAO.getInstance().getAllByTablecards(id) != null;
     }
 }

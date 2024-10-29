@@ -14,7 +14,7 @@ public class SizeDAO implements Serializable {
     private static SizeDAO instance;
     private final Connection conn = DBUtil.makeConnection();
 
-    // Cấm new trực tiếp SizeDAO, chỉ đi qua con đường lấy trực tiếp SizeDAO từ hàm static
+  
     private SizeDAO() {
     }
 
@@ -179,24 +179,11 @@ public class SizeDAO implements Serializable {
     ////////////////////////////////////////////////////////////////////////////
     public static void main(String[] args) {
 
-        // 1. Test select *
-        //System.out.println("All of sizes: \n" + getInstance().getAll()); //gọi thầm tên em
-        // 2. Test select where isbn = ?
-       // System.out.println("A size by id: " + getInstance().getOne("BT063333333333333333"));
-        // 3. Test select where author = ?
-        //System.out.println("Sizes by author: " + getInstance().getAllByAuthor("Paulo Coelho"));
-        // 4. Test update a size
+        
        getInstance().updateOne(new Size("BT040608101214161820", "3444", 3, 5));
-        // 3. Test select where author = ? again
-        //System.out.println(getInstance().getAllByAuthor("Paulo Coelho"));
-        // 5. Test delete a size
-        //getInstance().deleteOne("232");
+      
 
-        // 1. Test select * again
-        //System.out.println("All of sizes: \n" + getInstance().getAll()); //gọi thầm tên em
-        // 6. Test add a new size
-       // getInstance().addOne(new Size("BT063333333333333333", "7.5inch7color", 800, 480));
-        // 1. Test select * again
+        
         System.out.println("All of sizes: \n" + getInstance().getAll()); //gọi thầm tên em
 
     }
