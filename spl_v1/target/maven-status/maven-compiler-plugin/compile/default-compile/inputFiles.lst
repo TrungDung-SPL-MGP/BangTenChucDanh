@@ -1,3 +1,4 @@
+C:\website\BangTenChucDanh\spl_v1\src\main\java\com\spl\bt\controller\RoomCardCountServlet.java
 C:\website\BangTenChucDanh\spl_v1\src\main\java\com\spl\bt\dao\TablecardDAO.java
 C:\website\BangTenChucDanh\spl_v1\src\main\java\com\spl\bt\controller\DeleteRoomServlet.java
 C:\website\BangTenChucDanh\spl_v1\src\main\java\com\spl\bt\controller\ImageServlet.java
@@ -43,7 +44,6 @@ C:\website\BangTenChucDanh\spl_v1\src\main\java\com\spl\bt\controller\SizeServle
 C:\website\BangTenChucDanh\spl_v1\src\main\java\com\spl\bt\dto\Image.java
 C:\website\BangTenChucDanh\spl_v1\src\main\java\com\spl\bt\controller\FileUploadServlet.java
 C:\website\BangTenChucDanh\spl_v1\src\main\java\com\spl\bt\controller\UpdateSizeServlet.java
-C:\website\BangTenChucDanh\spl_v1\src\main\java\com\spl\bt\controller\AddPhotoServlet.java
 C:\website\BangTenChucDanh\spl_v1\src\main\java\com\spl\bt\dao\LoginDAO.java
 C:\website\BangTenChucDanh\spl_v1\src\main\java\com\spl\bt\dto\Admin.java
 C:\website\BangTenChucDanh\spl_v1\src\main\java\com\spl\bt\dao\RoomDAO.java

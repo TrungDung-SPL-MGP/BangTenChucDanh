@@ -11,14 +11,14 @@ $(document).ready(function () {
 
 });
 
-//预览
+
 function showImg(tid) {
     $("#showImage").removeAttr("src");
     $("#showImage").attr("src", "dispMM/showImage?dispmId=" + tid);
     $('#updateModal').modal({show: true, backdrop: false});
 }
 
-//刷新
+
 function refresh() {
     var queryData = $("#gridImport_body");
     queryData.html("");
@@ -45,7 +45,7 @@ function loadDispMMData(current) {
 }
 
 
-//分页效果
+
 function queryPage() {
     var current = Number($("#page_currentPage").val()) || 1;
     var pages = Number($("#pages").val()) || 1;
@@ -85,12 +85,12 @@ function queryPage() {
 }
 
 
-//添加字段层
+
 function toAdd() {
     $("#addModal").modal({show: true, backdrop: false});
 }
 
-//添加字段保存
+
 function addDispMM() {
     $("#addDispMMForm").ajaxSubmit({
         url: "dispMM/addDispMM",
@@ -107,7 +107,7 @@ function addDispMM() {
     });
 }
 
-//编辑字段显示
+
 function get(id) {
     $.ajax({
         url: "dispMM/getDispMMData?id=" + id,
@@ -128,7 +128,7 @@ function get(id) {
     })
 }
 
-//编辑字段保存
+
 function modifyDispMM() {
     $("#modifyDispMM").ajaxSubmit({
         url: "dispMM/updateDispMM",
@@ -145,7 +145,7 @@ function modifyDispMM() {
     });
 }
 
-//删除字段
+
 function del(id) {
     htmlStr = "";
     htmlStr = delHtml();
@@ -170,8 +170,8 @@ function del(id) {
                     var cur = $("#page_currentPage").val();
                     loadDispMMData(cur);
                 }
-                var index = layer.index;			//获取当前弹层的索引号
-                layer.close(index); 				//关闭当前弹层
+                var index = layer.index;			
+                layer.close(index); 				
             },
             error: function () {
                 alert("deleteDispMMData error");
@@ -179,8 +179,8 @@ function del(id) {
         })
     }
     this.cancel = function () {
-        var index = layer.index;			//获取当前弹层的索引号
-        layer.close(index); 				//关闭当前弹层
+        var index = layer.index;			
+        layer.close(index); 				
     }
 }
 //删除字段提示

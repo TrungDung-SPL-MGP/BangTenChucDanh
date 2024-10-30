@@ -79,7 +79,7 @@ function loadColumnAndGoodData(current) {
             });
 }
 
-// 分页效果
+
 function queryPage() {
     var current = Number($("#page_currentPage").val());
     var pages = Number($("#pages").val());
@@ -184,7 +184,7 @@ function toAdd() {
     });
 }
 
-// 添加字段保存
+
 function addColumnAndGood() {
     if (!mappingtype.value) {
         alert("请选择映射类型");
@@ -238,7 +238,7 @@ function get(id) {
     })
 }
 
-// 编辑字段保存
+
 function modifyColumnAndGood() {
     $("#modifyColumnAndGood").ajaxSubmit({
         url: "columnAndGood/UpdColumnAndGood",
@@ -255,7 +255,7 @@ function modifyColumnAndGood() {
     });
 }
 
-// 删除字段
+
 function del(id) {
     htmlStr = "";
     htmlStr = delHtml();
@@ -283,8 +283,8 @@ function del(id) {
                     var cur = $("#page_currentPage").val();
                     loadColumnAndGoodData(cur);
                 }
-                var index = layer.index; // 获取当前弹层的索引号
-                layer.close(index); // 关闭当前弹层
+                var index = layer.index; 
+                layer.close(index); 
             },
             error: function () {
                 alert("deleteColumnAndGoodData error");
@@ -292,11 +292,11 @@ function del(id) {
         })
     }
     this.cancel = function () {
-        var index = layer.index; // 获取当前弹层的索引号
-        layer.close(index); // 关闭当前弹层
+        var index = layer.index; 
+        layer.close(index); 
     }
 }
-// 删除字段提示
+
 function delHtml() {
     htmlStr += '<div style="width:300px;height:230px" >';
     htmlStr += '<div id="title" style=" line-height:50px; text-indent:10px;font-size:18px;font-weight:bold;';

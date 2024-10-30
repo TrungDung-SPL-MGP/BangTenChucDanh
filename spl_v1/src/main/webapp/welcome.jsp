@@ -307,7 +307,7 @@
                 } else if (page === 'table') {
                     iframe.src = 'table';
                 } else if (page === 'photo') {
-                    iframe.src = 'photo';
+                    iframe.src = 'listphoto.jsp';
                 } else if (page === 'size') {
                     iframe.src = 'size';
                 } else if (page === 'user') {
