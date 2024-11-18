@@ -60,6 +60,21 @@
                 border-collapse: collapse;
                 margin: 20px 0; /* Khoảng cách trên và dưới bảng */
                 width: 100%; /* Độ rộng là 100% của phần tử chứa */
+                height: 100%; /* Chiều cao là 30% của phần tử chứa */
+                background-color: #f0f0f0; /* Màu nền cho table */
+                border: 1px solid #ddd; /* Bề mặt bảng */
+                border-collapse: collapse;
+                border-spacing: 0;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                
+
+
+            }
+            /* Style table cells (td) */
+            td {
+                padding: 10px; /* Khoảng cách bên trong ô */
+                text-align: left; /* Căn lề văn bản theo trái */
+                border: 1px solid #ddd; /* Viền */
             }
 
             /* Set the height of the container div */

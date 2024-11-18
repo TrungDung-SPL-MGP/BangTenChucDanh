@@ -101,7 +101,14 @@
                 </tr>
                 <tr>
                     <td>Active:</td>
-                    <td><input type="text" name="active" value="" required /></td>
+                    <td><select name="active">
+                            
+                            <option>1</option>
+                            <option>0</option>
+                            
+                        </select>
+                    
+                    </td>
                 </tr>
                 <tr>
                     <td>Battery:</td>

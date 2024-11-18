@@ -51,8 +51,8 @@
             }
 
             .logo img {
-                width: 100%;
-                height: 30px;
+                width: 190px;
+                height: 50px;
                 display: block; /* Removes extra space below the image */
             }
 
@@ -196,11 +196,12 @@
                 padding: 10px;
                 cursor: pointer;
             }*/
-            .gradient-text {
-                background: linear-gradient(to top, #ff3399 26%, #ffcc66 100%);
-                -webkit-background-clip: text;
-                color: transparent;
-            }
+           .gradient-text {
+    background: linear-gradient(to top, #ff3399 0%, #ffcc66 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+}
             /* Style The Dropdown Button */
             .dropbtn {
                 background-color: rgb(128,128,128);
@@ -273,8 +274,7 @@
                 margin: 10px;
 
             }
-            .fa-calendar .fa-caret-down .fa-cogs {
-            }
+           
         </style>
         <script>
             var dropdown = document.getElementsByClassName("dropdown-btn");
@@ -292,7 +292,14 @@
                 });
             }
 
-            // JavaScript cho chức năng đăng xuất
+            /**
+             * JavaScript cho chức năng đăng xuất
+             * 
+             * @description
+             * Thực hiện đăng xuất người dùng
+             * 
+             * @returns {undefined}
+             */
             function logout() {
                 // Thực hiện đăng xuất tại đây
                 alert("Bạn đã đăng xuất thành công!");
@@ -454,7 +461,7 @@
         <div class="main">
 
 
-            <iframe id="myIframe" style="height: 435px;width:100%;" title="Iframe Example"></iframe>
+            <iframe id="myIframe" style="height: 666px;width:100%;" title="Iframe Example"></iframe>
 
         </div>
 

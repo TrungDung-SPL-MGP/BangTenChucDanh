@@ -7,7 +7,7 @@
 }
 ;
 
-// 按钮文字语言选择
+
 function setButtonLan() {
     // for (var i = 0; i < document.getElementsByTagName("button").length; i++) {
     //     var textContont = document.getElementsByTagName("button")[i].innerText
@@ -17,7 +17,7 @@ function setButtonLan() {
     // }
 }
 
-// 提示语言文字选择
+
 function setTittleLan() {
     /*for (var i = 0; i < document.getElementsByClassName("style-span-t").length; i++) {
      var textContont = document.getElementsByClassName("style-span-t")[i].innerText
@@ -28,7 +28,7 @@ function setTittleLan() {
      }*/
 }
 
-// 语言转换
+
 function getLanguageContent(val) {
     var language = 0;
     try {
@@ -62,14 +62,12 @@ function getLanguageContent(val) {
     return val;
 }
 
-// 替换页面小标题文字
+
 function setTagContent(val) {
     document.getElementsByClassName("tag-style")[0].innerText = getLanguageContent(val);
 }
 
-// ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-// 字库
-// 中文繁体（HK）
+
 var languageHK = {
     "序号": "序號",
     "桌牌地址": "桌牌地址",

@@ -49,6 +49,8 @@
             <th>Image</th>
             <td>
                 <img src="img/uploads/<%= photo.getFilePath() %>" alt="Photo" />
+                
+
             </td>
         </tr>
         <tr>

@@ -33,7 +33,7 @@
             <input type="text" name="title" value="<%= photo.getTitle() %>" required><br><br>
 
             <label>File Path:</label>
-            <input type="text" name="filePath" value="<%= photo.getFilePath() %>" required><br><br>
+            <input type="file" name="filePath" value="<%= photo.getFilePath() %>" required><br><br>
 
             <label>Size (KB):</label>
             <input type="number" name="sizeKB" value="<%= photo.getSizeKB() %>" required><br><br>
